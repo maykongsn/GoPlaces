@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">GoPlaces</string>
+    <!-- LOGIN -->
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
     <string name="enter">Entrar</string>
-    <string name="register">Cadastre-se</string>
+    <string name="register">Registrar-se</string>
+    <!-- REGISTER -->
+    <string name="full_name">Nome completo</string>
+    <string name="username">Nome de usuário</string>
+    <string name="create_account">Criar conta</string>
 </resources>
