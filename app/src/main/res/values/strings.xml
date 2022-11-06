@@ -9,4 +9,12 @@
     <string name="full_name">Nome completo</string>
     <string name="username">Nome de usuário</string>
     <string name="create_account">Criar conta</string>
+    <!-- MENU -->
+    <string name="home">Início</string>
+    <string name="map">Mapa</string>
+    <string name="following">Seguindo</string>
+    <string name="favorites">Favoritos</string>
+    <string name="profile">Perfil</string>
+    <string name="hello_blank_fragment">Teste</string>
+    <string name="save">Salvar</string>
 </resources>

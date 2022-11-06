@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.goplaces.MainActivity;
+import com.goplaces.activitys.MainActivity;
 import com.goplaces.R;
 
 public class LoginActivity extends AppCompatActivity {

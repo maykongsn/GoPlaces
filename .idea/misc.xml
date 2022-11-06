@@ -7,11 +7,25 @@
         <entry key="app/src/main/res/drawable/bg_edit.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_email.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/ic_home_outline.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_password.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/ic_profile_outline.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/menu_item_favorite.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/menu_item_following.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/menu_item_home.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/menu_item_map.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/menu_item_profile.xml" value="0.195" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.20104166666666667" />
       </map>
     </option>
   </component>
