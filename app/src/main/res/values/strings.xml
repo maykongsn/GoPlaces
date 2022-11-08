@@ -17,4 +17,7 @@
     <string name="profile">Perfil</string>
     <string name="hello_blank_fragment">Teste</string>
     <string name="save">Salvar</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="logout">Sair</string>
+    <string name="new_review">Nova Review</string>
 </resources>
