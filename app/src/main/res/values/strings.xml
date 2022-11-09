@@ -20,4 +20,7 @@
     <string name="edit_profile">Editar Perfil</string>
     <string name="logout">Sair</string>
     <string name="new_review">Nova Review</string>
+    <string name="description">Descrição</string>
+    <string name="city">Cidade</string>
+    <string name="country">País</string>
 </resources>
