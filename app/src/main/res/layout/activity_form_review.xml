@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activitys.FormReview">
+    tools:context=".activitys.FormReviewActivity">
 
     <include
         android:id="@+id/include"
@@ -151,7 +151,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:onClick="add"
+        android:onClick="addReview"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"

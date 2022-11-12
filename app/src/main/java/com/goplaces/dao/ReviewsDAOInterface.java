@@ -11,10 +11,7 @@ public interface ReviewsDAOInterface {
         return null;
     }
 
-    Review getReview(int reviewId);
-    ArrayList<Review> ListReviews();
-
     boolean addReview(Review review);
-    boolean editReview(Review review);
-    boolean deleteReview(int reviewId);
+    ArrayList<Review> listReviews();
+
 }

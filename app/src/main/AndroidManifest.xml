@@ -14,7 +14,7 @@
         android:theme="@style/Theme.GoPlaces"
         tools:targetApi="31">
         <activity
-            android:name=".activitys.FormReview"
+            android:name=".activitys.FormReviewActivity"
             android:exported="false" />
         <activity
             android:name=".activitys.EditProfileActivity"

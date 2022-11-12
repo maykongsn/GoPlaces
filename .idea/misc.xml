@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/bg_edit.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_email.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_favorite.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_favorite_outline.xml" value="0.195" />
@@ -33,7 +34,7 @@
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/review_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/review_item.xml" value="0.22" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.20104166666666667" />
       </map>

@@ -18,7 +18,7 @@ public class MyReviewsAdapter extends RecyclerView.Adapter<MyReviewsAdapter.View
     private ArrayList<Review> dataSet;
     private OnClickListener onClickListener;
 
-    public MyReviewsAdapter(OnClickListener onClickListener, ArrayList<Review> dataSet) {
+    public MyReviewsAdapter(ArrayList<Review> dataSet, OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.dataSet = dataSet;
     }
@@ -28,7 +28,7 @@ public class MyReviewsAdapter extends RecyclerView.Adapter<MyReviewsAdapter.View
         TextView textViewCountry;
         RatingBar rating;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewCity = itemView.findViewById(R.id.textViewCity);
             textViewCountry = itemView.findViewById(R.id.textViewCountry);

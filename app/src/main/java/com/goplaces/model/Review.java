@@ -1,15 +1,25 @@
 package com.goplaces.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.goplaces.helper.FirebaseHelper;
+
 public class Review {
     private String id;
-    private String user_id;
+    private String userId;
     private String city;
     private String country;
     private String description;
     private float rating;
-    private long publicationDate;
 
-    public Review(String city, String country, String description, float rating) {
+    public Review() {
+        DatabaseReference reviewReference = FirebaseHelper.getDatabaseReference();
+        this.setId(reviewReference.push().getKey());
+    }
+
+    public Review(String userId, String city, String country, String description, float rating) {
+        DatabaseReference reviewReference = FirebaseHelper.getDatabaseReference();
+        this.setId(reviewReference.push().getKey());
+        this.userId = userId;
         this.city = city;
         this.country = country;
         this.description = description;
@@ -21,6 +31,10 @@ public class Review {
     }
 
     public void setId(String id) { this.id = id; }
+
+    public String getUserId() { return userId; }
+
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getCity() {
         return city;
@@ -48,10 +62,5 @@ public class Review {
 
     public void setRating(float rating) {
         this.rating = rating;
-    }
-
-    @Override
-    public String toString() {
-        return "City: " + city;
     }
 }

@@ -1,15 +1,25 @@
 package com.goplaces.dao;
 
 import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.goplaces.helper.FirebaseHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import com.goplaces.model.Review;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class ReviewsDAO implements ReviewsDAOInterface{
-    private static ArrayList<Review> reviews = new ArrayList<>();
+public class ReviewsDAO implements ReviewsDAOInterface {
+    ArrayList<Review> reviews = new ArrayList<>();
     private static Context context;
-
+    private static final String TAG = "teste";
     private static ReviewsDAO reviewsDAO = null;
 
     private ReviewsDAO(Context context) {
@@ -24,38 +34,43 @@ public class ReviewsDAO implements ReviewsDAOInterface{
     }
 
     @Override
-    public Review getReview(int reviewId) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Review> ListReviews() {
-        return reviews;
-    }
-
-    @Override
     public boolean addReview(Review review) {
-        reviews.add(review);
+        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
+                .child("reviews")
+                .child(FirebaseHelper.getIdFirebase())
+                .child(review.getId());
+        reviewsReference.setValue(review);
         return true;
     }
 
     @Override
-    public boolean editReview(Review review) {
-        for(Review newReview : reviews) {
-            if(newReview.getId() == review.getId()) {
-                newReview.setCity(review.getCity());
-                newReview.setCountry(review.getCountry());
-                newReview.setDescription(review.getDescription());
-                newReview.setRating(review.getRating());
-                return true;
+    public ArrayList<Review> listReviews() {
+        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
+                .child("reviews")
+                .child(FirebaseHelper.getIdFirebase());
+        reviewsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    reviews.clear();
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Review review = dataSnapshot.getValue(Review.class);
+                        reviews.add(review);
+                    }
+                    Collections.reverse(reviews);
+                    Log.d(TAG, reviews.get(2).getCity());
+
+                }
             }
-        }
-        return false;
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+        return reviews;
     }
 
-    @Override
-    public boolean deleteReview(int reviewId) {
-        return false;
-    }
 
 }
