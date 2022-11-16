@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,25 +14,47 @@ import android.widget.Button;
 
 import com.goplaces.R;
 import com.goplaces.activitys.FormReviewActivity;
+import com.goplaces.activitys.ReviewDetailsActivity;
+import com.goplaces.adapter.ReviewsAdapter;
+import com.goplaces.dao.ReviewsDAO;
+import com.goplaces.dao.ReviewsDAOInterface;
+import com.goplaces.model.Review;
+import com.tsuryo.swipeablerv.SwipeableRecyclerView;
 
-public class HomeFragment extends Fragment {
-    private Button buttonNewReview;
+import java.util.ArrayList;
+
+public class HomeFragment extends Fragment implements ReviewsAdapter.OnClickListener {
+    ReviewsDAOInterface reviewsDAO;
+    ReviewsAdapter adapter;
+    ArrayList<Review> reviews;
+
+    RecyclerView recyclerViewReviews;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        buttonNewReview = view.findViewById(R.id.buttonNewReview);
+        reviewsDAO = ReviewsDAO.getInstance(getContext());
+        reviews = reviewsDAO.listReviews();
 
-        newReview();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        adapter = new ReviewsAdapter(reviews, this);
+
+        recyclerViewReviews = view.findViewById(R.id.recyclerViewReviews);
+        recyclerViewReviews.setLayoutManager(linearLayoutManager);
+        recyclerViewReviews.setAdapter(adapter);
 
         return view;
     }
 
-    public void newReview() {
-        buttonNewReview.setOnClickListener(view -> {
-            startActivity(new Intent(getActivity(), FormReviewActivity.class));
-        });
+    @Override
+    public void onClick(Review review) {
+        Intent intent = new Intent(getActivity(), ReviewDetailsActivity.class);
+        intent.putExtra("id", ""+review.getId());
+        intent.putExtra("city", review.getCity());
+        intent.putExtra("country", review.getCountry());
+        intent.putExtra("description", review.getDescription());
+        intent.putExtra("rating", review.getRating());
+        startActivity(intent);
     }
 }

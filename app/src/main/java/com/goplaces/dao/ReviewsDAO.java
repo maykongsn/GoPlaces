@@ -19,7 +19,6 @@ import java.util.Collections;
 public class ReviewsDAO implements ReviewsDAOInterface {
     ArrayList<Review> reviews = new ArrayList<>();
     private static Context context;
-    private static final String TAG = "teste";
     private static ReviewsDAO reviewsDAO = null;
 
     private ReviewsDAO(Context context) {
@@ -35,41 +34,38 @@ public class ReviewsDAO implements ReviewsDAOInterface {
 
     @Override
     public boolean addReview(Review review) {
-        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
-                .child("reviews")
-                .child(FirebaseHelper.getIdFirebase())
-                .child(review.getId());
-        reviewsReference.setValue(review);
+        reviews.add(review);
         return true;
     }
 
     @Override
+    public boolean editReview(Review review) {
+        for(Review newReview : reviews) {
+            if(newReview.getId() == review.getId()) {
+                newReview.setCity(review.getCity());
+                newReview.setCountry(review.getCountry());
+                newReview.setDescription(review.getDescription());
+                newReview.setRating(review.getRating());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public ArrayList<Review> listReviews() {
-        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
-                .child("reviews")
-                .child(FirebaseHelper.getIdFirebase());
-        reviewsReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    reviews.clear();
-                    for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Review review = dataSnapshot.getValue(Review.class);
-                        reviews.add(review);
-                    }
-                    Collections.reverse(reviews);
-                    Log.d(TAG, reviews.get(2).getCity());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
         return reviews;
+    }
+
+    @Override
+    public boolean removeReview(Review review) {
+        for(Review temp : reviews) {
+            if(temp.getId() == review.getId()) {
+                reviews.remove(review);
+                return true;
+            }
+        }
+        return false;
     }
 
 

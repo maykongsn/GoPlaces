@@ -14,11 +14,11 @@ import com.goplaces.model.Review;
 
 import java.util.ArrayList;
 
-public class MyReviewsAdapter extends RecyclerView.Adapter<MyReviewsAdapter.ViewHolder> {
+public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
     private ArrayList<Review> dataSet;
     private OnClickListener onClickListener;
 
-    public MyReviewsAdapter(ArrayList<Review> dataSet, OnClickListener onClickListener) {
+    public ReviewsAdapter(ArrayList<Review> dataSet, OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.dataSet = dataSet;
     }
@@ -50,7 +50,7 @@ public class MyReviewsAdapter extends RecyclerView.Adapter<MyReviewsAdapter.View
 
     @NonNull
     @Override
-    public MyReviewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReviewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.review_item, parent, false
         );
@@ -59,7 +59,7 @@ public class MyReviewsAdapter extends RecyclerView.Adapter<MyReviewsAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyReviewsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         Review review = dataSet.get(position);
 
         holder.getTextViewCity().setText(review.getCity());
