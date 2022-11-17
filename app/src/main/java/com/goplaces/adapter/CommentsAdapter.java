@@ -9,45 +9,45 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goplaces.R;
-import com.goplaces.model.Friend;
+import com.goplaces.model.Comment;
 
 import java.util.ArrayList;
 
-public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder>{
-    private ArrayList<Friend> dataSet;
+public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
+    private ArrayList<Comment> dataSet;
 
-    public FriendsAdapter(ArrayList<Friend> dataSet) {
+    public CommentsAdapter(ArrayList<Comment> dataSet) {
         this.dataSet = dataSet;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewUsername;
+        TextView textViewComment;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewUsername = itemView.findViewById(R.id.textViewUsername);
+            textViewComment = itemView.findViewById(R.id.textViewComment);
         }
 
-        public TextView getTextViewUsername() {
-            return textViewUsername;
+        public TextView getTextViewComment() {
+            return textViewComment;
         }
     }
 
     @NonNull
     @Override
-    public FriendsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CommentsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.friend_item, parent, false
+                R.layout.comment_item, parent, false
         );
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FriendsAdapter.ViewHolder holder, int position) {
-        Friend friend = dataSet.get(position);
+    public void onBindViewHolder(@NonNull CommentsAdapter.ViewHolder holder, int position) {
+        Comment comment = dataSet.get(position);
 
-        holder.getTextViewUsername().setText(friend.getUsername());
+        holder.getTextViewComment().setText(comment.getMessage());
     }
 
     @Override

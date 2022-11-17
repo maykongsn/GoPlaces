@@ -14,10 +14,13 @@
         android:theme="@style/Theme.GoPlaces"
         tools:targetApi="31">
         <activity
-            android:name=".FormFriendActivity"
+            android:name=".activitys.FormCommentActivity"
             android:exported="false" />
         <activity
-            android:name=".MyFriendsActivity"
+            android:name=".activitys.FormFriendActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.MyFriendsActivity"
             android:exported="false" />
         <activity
             android:name=".activitys.FormPlaceActivity"

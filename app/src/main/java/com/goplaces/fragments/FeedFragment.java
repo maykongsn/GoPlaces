@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.goplaces.R;
+import com.goplaces.activitys.EditProfileActivity;
+import com.goplaces.activitys.MyFriendsActivity;
 import com.goplaces.activitys.ReviewDetailsActivity;
 import com.goplaces.adapter.ReviewsAdapter;
 import com.goplaces.dao.ReviewsDAO;
@@ -33,6 +35,9 @@ public class FeedFragment extends Fragment implements ReviewsAdapter.OnClickList
 
         reviewsDAO = ReviewsDAO.getInstance(getContext());
         reviews = reviewsDAO.listReviews();
+
+        view.findViewById(R.id.buttonAddFriend).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), MyFriendsActivity.class)));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ReviewsAdapter(reviews, this);
