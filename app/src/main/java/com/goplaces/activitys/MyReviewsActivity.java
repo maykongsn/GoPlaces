@@ -30,6 +30,8 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
         reviewsDAO = ReviewsDAO.getInstance(this);
         reviews = reviewsDAO.listReviews();
 
+        findViewById(R.id.imageButtonBack).setOnClickListener(view -> finish());
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         adapter = new ReviewsAdapter(reviews, this);
 

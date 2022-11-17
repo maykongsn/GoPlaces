@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.goplaces.R;
 import com.goplaces.activitys.EditProfileActivity;
+import com.goplaces.activitys.MyPlacesActivity;
 import com.goplaces.activitys.MyReviewsActivity;
 import com.goplaces.adapter.ReviewsAdapter;
 import com.goplaces.auth.LoginActivity;
@@ -18,7 +19,7 @@ import com.goplaces.dao.ReviewsDAO;
 import com.goplaces.dao.ReviewsDAOInterface;
 import com.goplaces.model.Review;
 
-public class ProfileFragment extends Fragment implements ReviewsAdapter.OnClickListener {
+public class ProfileFragment extends Fragment {
     ReviewsDAOInterface reviewsDAO;
 
     @Override
@@ -33,18 +34,16 @@ public class ProfileFragment extends Fragment implements ReviewsAdapter.OnClickL
     }
 
     private void configClick(View view) {
-        view.findViewById(R.id.textViewEditProfile).setOnClickListener(v ->
-                startActivity(new Intent(getActivity(), EditProfileActivity.class)));
-
-        view.findViewById(R.id.textViewLogout).setOnClickListener(v ->
-                startActivity(new Intent(getActivity(), LoginActivity.class)));
-
         view.findViewById(R.id.buttonMyReviews).setOnClickListener(v ->
                 startActivity(new Intent(getActivity(), MyReviewsActivity.class)));
-    }
 
-    @Override
-    public void onClick(Review review) {
+        view.findViewById(R.id.buttonMyPlaces).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), MyPlacesActivity.class)));
+
+        view.findViewById(R.id.buttonEditProfile).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), EditProfileActivity.class)));
+
+        view.findViewById(R.id.buttonLogout).setOnClickListener(v -> getActivity().finish());
 
     }
 }

@@ -12,5 +12,7 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        findViewById(R.id.imageButtonBack).setOnClickListener(view -> finish());
     }
 }

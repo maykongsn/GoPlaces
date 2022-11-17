@@ -4,30 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FeedFragment">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewReviews"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    tools:context=".activitys.MyFriendsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.tsuryo.swipeablerv.SwipeableRecyclerView
+        android:id="@+id/recyclerViewFriends"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMyFriends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:rightBgColor="@color/red"
+        app:rightImage="@drawable/ic_delete" />
+
     <android.widget.Button
-        android:id="@+id/buttonNewReview"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonMyFriends"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_button"
-        android:backgroundTint="@color/blue_dark"
-        android:text="@string/new_review"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_margin="16dp"
+        android:text="Adicionar amigo"
         android:textAllCaps="false"
+        android:onClick="addFriend"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:drawableStart="@drawable/ic_place"
-        android:drawablePadding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

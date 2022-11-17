@@ -26,9 +26,13 @@
         <entry key="app/src/main/res/drawable/menu_item_profile.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/rounded_image.xml" value="0.195" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/activity_form_friend.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/activity_form_place.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_form_review.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_my_friends.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/activity_my_places.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_my_reviews.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_review_details.xml" value="0.21" />
@@ -36,6 +40,8 @@
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.15" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/friend_item.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/place_item.xml" value="0.23357664233576642" />
         <entry key="app/src/main/res/layout/review_item.xml" value="0.22" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.20104166666666667" />
