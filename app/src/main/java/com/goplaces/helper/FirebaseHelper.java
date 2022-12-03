@@ -3,21 +3,20 @@ package com.goplaces.helper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.storage.FirebaseStorage;
-//import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class FirebaseHelper {
-
     private static FirebaseAuth auth;
     private static DatabaseReference databaseReference;
-    //private static StorageReference storageReference;
+    private static StorageReference storageReference;
 
-//    public static StorageReference getStorageReference(){
-//        if(storageReference == null){
-//            storageReference = FirebaseStorage.getInstance().getReference();
-//        }
-//        return storageReference;
-//    }
+    public static StorageReference getStorageReference(){
+        if(storageReference == null){
+            storageReference = FirebaseStorage.getInstance().getReference();
+        }
+        return storageReference;
+    }
 
     public static String getIdFirebase(){
         return getAuth().getUid();
@@ -37,7 +36,7 @@ public class FirebaseHelper {
         return auth;
     }
 
-    public static boolean getAutenticado(){
+    public static boolean getAutenticated(){
         return getAuth().getCurrentUser() != null;
     }
 
