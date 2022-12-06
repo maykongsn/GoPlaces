@@ -44,9 +44,10 @@
                         app:cardCornerRadius="5dp">
                         <ImageView
                             android:id="@+id/image1"
-                            android:layout_width="46dp"
-                            android:layout_height="46dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/ic_add_photo" />
                     </androidx.cardview.widget.CardView>
 
@@ -58,9 +59,10 @@
                         app:cardCornerRadius="5dp">
                         <ImageView
                             android:id="@+id/image2"
-                            android:layout_width="46dp"
-                            android:layout_height="46dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/ic_add_photo" />
                     </androidx.cardview.widget.CardView>
 
@@ -72,9 +74,9 @@
 
                         <ImageView
                             android:id="@+id/image3"
-                            android:layout_width="46dp"
-                            android:layout_height="46dp"
-                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/ic_add_photo" />
                     </androidx.cardview.widget.CardView>
             </LinearLayout>

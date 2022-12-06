@@ -1,11 +1,16 @@
 package com.goplaces.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,14 +18,16 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.storage.StorageReference;
 import com.goplaces.R;
-import com.goplaces.dao.ReviewsDAO;
-import com.goplaces.dao.ReviewsDAOInterface;
 import com.goplaces.helper.FirebaseHelper;
+import com.goplaces.model.Image;
 import com.goplaces.model.Review;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FormReviewActivity extends AppCompatActivity {
@@ -32,6 +39,8 @@ public class FormReviewActivity extends AppCompatActivity {
     private EditText editTextCountry;
     private EditText editTextDescription;
     private RatingBar ratingBar;
+
+    private ArrayList<Image> images = new ArrayList<>();
 
     int id;
 
@@ -76,58 +85,50 @@ public class FormReviewActivity extends AppCompatActivity {
     }
 
     public void openBottomSheet() {
-        image1.setOnClickListener(view -> showBottomSheet(1));
+        image1.setOnClickListener(view -> showBottomSheet(0));
 
-        image2.setOnClickListener(view -> showBottomSheet(2));
+        image2.setOnClickListener(view -> showBottomSheet(1));
 
-        image3.setOnClickListener(view -> showBottomSheet(3));
+        image3.setOnClickListener(view -> showBottomSheet(2));
     }
 
-    public void showBottomSheet(int position) {
+    public void showBottomSheet(int requestCode) {
         View bottomSheet = getLayoutInflater().inflate(R.layout.layout_bottom_sheet, null);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
         bottomSheetDialog.setContentView(bottomSheet);
         bottomSheetDialog.show();
 
-        bottomSheet.findViewById(R.id.btnCamera).setOnClickListener(view -> {
-            bottomSheetDialog.dismiss();
-            checkPermissionCamera(position);
-        });
-
         bottomSheet.findViewById(R.id.btnGallery).setOnClickListener(view -> {
             bottomSheetDialog.dismiss();
-            checkPermissionGallery(position);
+            checkPermissionGallery(requestCode);
         });
     }
 
-    public void checkPermissionCamera(int position) {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-
+    public void upload(int requestCode, String source) {
+        Image image = new Image(source, requestCode);
+        if(images.size() > 0) {
+            boolean find = false;
+            for(int i = 0; i < images.size(); i++) {
+                if(images.get(i).getIndex() == requestCode) {
+                    find = true;
+                }
             }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-
+            if(find) {
+                images.set(requestCode, image);
+            } else {
+                images.add(image);
             }
-        };
-
-        TedPermission.create()
-                .setPermissionListener(permissionListener)
-                .setDeniedTitle("Permissão Negada")
-                .setDeniedMessage("Aceite a permissão para tirar uma foto com a câmera.")
-                .setGotoSettingButtonText("Sim")
-                .setDeniedCloseButtonText("Não")
-                .setPermissions(Manifest.permission.CAMERA)
-                .check();
+        } else {
+            images.add(image);
+        }
     }
 
-    public void checkPermissionGallery(int position) {
+    public void checkPermissionGallery(int requestCode) {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, requestCode);
             }
 
             @Override
@@ -146,6 +147,55 @@ public class FormReviewActivity extends AppCompatActivity {
                 .check();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            Bitmap bitmap1;
+            Bitmap bitmap2;
+            Bitmap bitmap3;
+
+            Uri selectedImage = data.getData();
+            String source;
+            if(requestCode <= 2) {
+                try {
+                    source = selectedImage.toString();
+                    switch (requestCode) {
+                        case 0:
+                            if (Build.VERSION.SDK_INT < 28) {
+                                bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                            } else {
+                                ImageDecoder.Source decoderSource = ImageDecoder.createSource(getContentResolver(), selectedImage);
+                                bitmap1 = ImageDecoder.decodeBitmap(decoderSource);
+                            }
+                            image1.setImageBitmap(bitmap1);
+                            break;
+                        case 1:
+                            if (Build.VERSION.SDK_INT < 28) {
+                                bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                            } else {
+                                ImageDecoder.Source decoderSource = ImageDecoder.createSource(getContentResolver(), selectedImage);
+                                bitmap2 = ImageDecoder.decodeBitmap(decoderSource);
+                            }
+                            image2.setImageBitmap(bitmap2);
+                            break;
+                        case 2:
+                            if (Build.VERSION.SDK_INT < 28) {
+                                bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                            } else {
+                                ImageDecoder.Source decoderSource = ImageDecoder.createSource(getContentResolver(), selectedImage);
+                                bitmap3 = ImageDecoder.decodeBitmap(decoderSource);
+                            }
+                            image3.setImageBitmap(bitmap3);
+                            break;
+                    }
+                    upload(requestCode, source);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     public void addReview(View view) {
         String city = editTextCity.getText().toString();
         String country = editTextCountry.getText().toString();
@@ -164,5 +214,4 @@ public class FormReviewActivity extends AppCompatActivity {
         setResult(1, intent);
         finish();
     }
-
 }

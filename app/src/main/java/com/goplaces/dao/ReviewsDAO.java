@@ -34,21 +34,32 @@ public class ReviewsDAO implements ReviewsDAOInterface {
 
     @Override
     public boolean addReview(Review review) {
-        reviews.add(review);
+        review.setUserId(FirebaseHelper.getIdFirebase());
+        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
+                .child("reviews")
+                .child(review.getId());
+        reviewsReference.setValue(review);
+
+        DatabaseReference myReviewsReference = FirebaseHelper.getDatabaseReference()
+                .child("myReviews")
+                .child(FirebaseHelper.getIdFirebase())
+                .child(review.getId());
+        myReviewsReference.setValue(review);
+
         return true;
     }
 
     @Override
     public boolean editReview(Review review) {
-        for(Review newReview : reviews) {
-            if(newReview.getId() == review.getId()) {
-                newReview.setCity(review.getCity());
-                newReview.setCountry(review.getCountry());
-                newReview.setDescription(review.getDescription());
-                newReview.setRating(review.getRating());
-                return true;
-            }
-        }
+//        for(Review newReview : reviews) {
+//            if(newReview.getId() == review.getId()) {
+//                newReview.setCity(review.getCity());
+//                newReview.setCountry(review.getCountry());
+//                newReview.setDescription(review.getDescription());
+//                newReview.setRating(review.getRating());
+//                return true;
+//            }
+//        }
         return false;
     }
 
@@ -59,12 +70,12 @@ public class ReviewsDAO implements ReviewsDAOInterface {
 
     @Override
     public boolean removeReview(Review review) {
-        for(Review temp : reviews) {
-            if(temp.getId() == review.getId()) {
-                reviews.remove(review);
-                return true;
-            }
-        }
+//        for(Review temp : reviews) {
+//            if(temp.getId() == review.getId()) {
+//                reviews.remove(review);
+//                return true;
+//            }
+//        }
         return false;
     }
 

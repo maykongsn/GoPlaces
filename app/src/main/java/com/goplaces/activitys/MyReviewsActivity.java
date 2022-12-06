@@ -1,5 +1,6 @@
 package com.goplaces.activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -7,20 +8,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.goplaces.R;
 import com.goplaces.adapter.ReviewsAdapter;
 import com.goplaces.dao.ReviewsDAO;
 import com.goplaces.dao.ReviewsDAOInterface;
+import com.goplaces.helper.FirebaseHelper;
 import com.goplaces.model.Review;
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback;
 import com.tsuryo.swipeablerv.SwipeableRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapter.OnClickListener {
     ReviewsDAOInterface reviewsDAO;
     ReviewsAdapter adapter;
-    ArrayList<Review> reviews;
+    ArrayList<Review> reviews = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +35,6 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
         setContentView(R.layout.activity_my_reviews);
 
         reviewsDAO = ReviewsDAO.getInstance(this);
-        reviews = reviewsDAO.listReviews();
 
         findViewById(R.id.imageButtonBack).setOnClickListener(view -> finish());
 
@@ -48,6 +54,35 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
             @Override
             public void onSwipedRight(int position) {
                 editReview(reviews.get(position));
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        loadReviews();
+    }
+
+    public void loadReviews() {
+        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
+                .child("myReviews")
+                .child(FirebaseHelper.getIdFirebase());
+        reviewsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Review review = ds.getValue(Review.class);
+                    reviews.add(review);
+                }
+                Collections.reverse(reviews);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -93,10 +128,8 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
             String description = data.getExtras().getString("description");
             float rating = data.getExtras().getFloat("rating");
             if(idString != null) {
-                int id = Integer.parseInt(idString);
-
                 Review review = new Review(city, country, description, rating);
-                review.setId(id);
+                review.setId(idString);
 
                 reviewsDAO.editReview(review);
                 adapter.notifyDataSetChanged();

@@ -1,5 +1,8 @@
 package com.goplaces.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.goplaces.helper.FirebaseHelper;
+
 public class User {
     private String id;
     private String fullName;
@@ -10,6 +13,8 @@ public class User {
     public User() {}
 
     public User(String fullName, String username, String email, String password) {
+        DatabaseReference reviewReference = FirebaseHelper.getDatabaseReference();
+        this.setId(reviewReference.push().getKey());
         this.fullName = fullName;
         this.username = username;
         this.email = email;
