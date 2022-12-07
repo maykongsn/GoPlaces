@@ -66,6 +66,7 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
     }
 
     public void loadReviews() {
+        reviews.clear();
         DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
                 .child("myReviews")
                 .child(FirebaseHelper.getIdFirebase());
@@ -104,6 +105,7 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
     }
 
     public void removeReview(Review review) {
+        reviews.remove(review);
         reviewsDAO.removeReview(review);
         adapter.notifyDataSetChanged();
     }

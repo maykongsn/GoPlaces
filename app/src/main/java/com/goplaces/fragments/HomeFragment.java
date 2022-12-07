@@ -3,6 +3,7 @@ package com.goplaces.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,21 +13,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.goplaces.R;
 import com.goplaces.activitys.FormReviewActivity;
 import com.goplaces.activitys.ReviewDetailsActivity;
 import com.goplaces.adapter.ReviewsAdapter;
 import com.goplaces.dao.ReviewsDAO;
 import com.goplaces.dao.ReviewsDAOInterface;
+import com.goplaces.helper.FirebaseHelper;
 import com.goplaces.model.Review;
 import com.tsuryo.swipeablerv.SwipeableRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment implements ReviewsAdapter.OnClickListener {
     ReviewsDAOInterface reviewsDAO;
     ReviewsAdapter adapter;
-    ArrayList<Review> reviews;
+    ArrayList<Review> reviews = new ArrayList<>();
 
     RecyclerView recyclerViewReviews;
 
@@ -45,6 +52,36 @@ public class HomeFragment extends Fragment implements ReviewsAdapter.OnClickList
         recyclerViewReviews.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        loadReviews();
+    }
+
+
+    public void loadReviews() {
+        reviews.clear();
+        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
+                .child("reviews");
+        reviewsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Review review = ds.getValue(Review.class);
+                    reviews.add(review);
+                }
+                Collections.reverse(reviews);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

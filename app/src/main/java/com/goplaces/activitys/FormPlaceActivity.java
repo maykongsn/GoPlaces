@@ -14,16 +14,15 @@ public class FormPlaceActivity extends AppCompatActivity {
     EditText editTextCity;
     EditText editTextCountry;
 
-    int id;
+    String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_place);
-        id = -1;
 
         TextView textViewToolbar = findViewById(R.id.textViewToolbar);
-        textViewToolbar.setText("Novo Lugar");
+        textViewToolbar.setText("Lugares");
 
         findViewById(R.id.imageButtonBack).setOnClickListener(view -> finish());
 
@@ -31,13 +30,9 @@ public class FormPlaceActivity extends AppCompatActivity {
         editTextCountry = findViewById(R.id.editTextCountry);
 
         if(getIntent().getExtras() != null) {
-            String idString = getIntent().getExtras().getString("id");
+            id = getIntent().getExtras().getString("id");
             String city = getIntent().getExtras().getString("city");
             String country = getIntent().getExtras().getString("country");
-
-            if(idString != null) {
-                id = Integer.parseInt(idString);
-            }
 
             editTextCity.setText(city);
             editTextCountry.setText(country);
@@ -52,7 +47,7 @@ public class FormPlaceActivity extends AppCompatActivity {
         intent.putExtra("city", city);
         intent.putExtra("country", country);
 
-        if( id >= 0 ) {
+        if(!id.equals("")) {
             intent.putExtra("id", "" + id);
         }
 

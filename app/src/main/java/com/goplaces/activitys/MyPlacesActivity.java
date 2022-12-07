@@ -1,5 +1,6 @@
 package com.goplaces.activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -7,21 +8,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.goplaces.R;
 import com.goplaces.adapter.PlacesAdapter;
 import com.goplaces.dao.PlacesDAO;
 import com.goplaces.dao.PlacesDAOInterface;
+import com.goplaces.helper.FirebaseHelper;
 import com.goplaces.model.Place;
 import com.goplaces.model.Review;
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback;
 import com.tsuryo.swipeablerv.SwipeableRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MyPlacesActivity extends AppCompatActivity {
     PlacesDAOInterface placesDAO;
     PlacesAdapter adapter;
-    ArrayList<Place> places;
+    ArrayList<Place> places = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +36,6 @@ public class MyPlacesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_places);
 
         placesDAO = PlacesDAO.getInstance(this);
-        places = placesDAO.listPlaces();
 
         findViewById(R.id.imageButtonBack).setOnClickListener(view -> finish());
 
@@ -53,6 +59,36 @@ public class MyPlacesActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        loadPlaces();
+    }
+
+    public void loadPlaces() {
+        places.clear();
+        DatabaseReference placesReference = FirebaseHelper.getDatabaseReference()
+                .child("places")
+                .child(FirebaseHelper.getIdFirebase());
+        placesReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Place place = ds.getValue(Place.class);
+                    places.add(place);
+                }
+                Collections.reverse(places);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void addPlace(View view) {
         Intent intent = new Intent(this, FormPlaceActivity.class);
         startActivityForResult(intent, 1);
@@ -68,6 +104,7 @@ public class MyPlacesActivity extends AppCompatActivity {
     }
 
     public void removePlace(Place place) {
+        places.remove(place);
         placesDAO.removePlace(place);
         adapter.notifyDataSetChanged();
     }
@@ -89,10 +126,8 @@ public class MyPlacesActivity extends AppCompatActivity {
             String country = data.getExtras().getString("country");
 
             if(idString != null) {
-                int id = Integer.parseInt(idString);
-
                 Place place = new Place(city, country);
-                place.setId(id);
+                place.setId(idString);
 
                 placesDAO.editPlace(place);
                 adapter.notifyDataSetChanged();

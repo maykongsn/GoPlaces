@@ -42,13 +42,12 @@ public class FormReviewActivity extends AppCompatActivity {
 
     private ArrayList<Image> images = new ArrayList<>();
 
-    int id;
+    String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_review);
-        id = -1;
 
         TextView textViewToolbar = findViewById(R.id.textViewToolbar);
 
@@ -63,15 +62,11 @@ public class FormReviewActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
 
         if(getIntent().getExtras() != null) {
-            String idString = getIntent().getExtras().getString("id");
+            id = getIntent().getExtras().getString("id");
             String city = getIntent().getExtras().getString("city");
             String country = getIntent().getExtras().getString("country");
             String description = getIntent().getExtras().getString("description");
             float rating = getIntent().getExtras().getFloat("rating");
-
-            if(idString != null) {
-                id = Integer.parseInt(idString);
-            }
 
             editTextCity.setText(city);
             editTextCountry.setText(country);
@@ -81,7 +76,7 @@ public class FormReviewActivity extends AppCompatActivity {
 
         openBottomSheet();
 
-        textViewToolbar.setText("Novo Review");
+        textViewToolbar.setText("Review");
     }
 
     public void openBottomSheet() {
@@ -196,6 +191,7 @@ public class FormReviewActivity extends AppCompatActivity {
             }
         }
     }
+
     public void addReview(View view) {
         String city = editTextCity.getText().toString();
         String country = editTextCountry.getText().toString();
@@ -208,9 +204,10 @@ public class FormReviewActivity extends AppCompatActivity {
         intent.putExtra("description", description);
         intent.putExtra("rating", rating);
 
-        if( id >= 0 ) {
+        if(!id.equals("")) {
             intent.putExtra("id", "" + id);
         }
+
         setResult(1, intent);
         finish();
     }
