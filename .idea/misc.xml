@@ -41,7 +41,7 @@
         <entry key="app/src/main/res/layout/activity_my_places.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_my_reviews.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_review_details.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/activity_review_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/comment_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.17119565217391305" />

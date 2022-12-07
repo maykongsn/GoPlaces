@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
@@ -61,8 +62,11 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
     @Override
     protected void onStart() {
         super.onStart();
-
         loadReviews();
+    }
+
+    public void listReviews() {
+        reviews = reviewsDAO.listReviews();
     }
 
     public void loadReviews() {
@@ -120,7 +124,6 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
             float rating = data.getExtras().getFloat("rating");
 
             Review review = new Review(city, country, description, rating);
-
             reviewsDAO.addReview(review);
             adapter.notifyDataSetChanged();
         } else if(requestCode == 2 && resultCode == 1) {
@@ -143,6 +146,8 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
     @Override
     public void onClick(Review review) {
         Intent intent = new Intent(this, ReviewDetailsActivity.class);
+        intent.putExtra("id", ""+ review.getId());
+        intent.putExtra("userId", ""+ review.getUserId());
         intent.putExtra("city", review.getCity());
         intent.putExtra("country", review.getCountry());
         intent.putExtra("description", review.getDescription());

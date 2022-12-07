@@ -68,6 +68,25 @@ public class ReviewsDAO implements ReviewsDAOInterface {
 
     @Override
     public ArrayList<Review> listReviews() {
+        DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
+                .child("myReviews")
+                .child(FirebaseHelper.getIdFirebase());
+        reviewsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reviews.clear();
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Review review = ds.getValue(Review.class);
+                    reviews.add(review);
+                }
+                Collections.reverse(reviews);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return reviews;
     }
 

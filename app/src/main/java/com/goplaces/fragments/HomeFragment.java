@@ -61,7 +61,6 @@ public class HomeFragment extends Fragment implements ReviewsAdapter.OnClickList
         loadReviews();
     }
 
-
     public void loadReviews() {
         reviews.clear();
         DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()
@@ -87,7 +86,8 @@ public class HomeFragment extends Fragment implements ReviewsAdapter.OnClickList
     @Override
     public void onClick(Review review) {
         Intent intent = new Intent(getActivity(), ReviewDetailsActivity.class);
-        intent.putExtra("id", ""+review.getId());
+        intent.putExtra("id", ""+ review.getId());
+        intent.putExtra("userId", ""+ review.getUserId());
         intent.putExtra("city", review.getCity());
         intent.putExtra("country", review.getCountry());
         intent.putExtra("description", review.getDescription());
