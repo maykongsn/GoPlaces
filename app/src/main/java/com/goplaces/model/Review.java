@@ -12,7 +12,6 @@ public class Review {
     private String country;
     private String description;
     private float rating;
-    private ArrayList<String> images = new ArrayList<>();
 
     public Review() {}
 

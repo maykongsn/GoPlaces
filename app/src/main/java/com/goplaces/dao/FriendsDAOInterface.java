@@ -11,7 +11,5 @@ public interface FriendsDAOInterface {
         return null;
     }
 
-    ArrayList<Friend> listFriends();
     boolean addFriend(Friend friend);
-    boolean removeFriend(Friend friend);
 }

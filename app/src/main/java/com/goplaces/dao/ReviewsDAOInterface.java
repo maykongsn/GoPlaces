@@ -11,7 +11,6 @@ public interface ReviewsDAOInterface {
         return null;
     }
 
-    ArrayList<Review> listReviews();
     boolean addReview(Review review);
     boolean editReview(Review review);
     boolean removeReview(Review review);

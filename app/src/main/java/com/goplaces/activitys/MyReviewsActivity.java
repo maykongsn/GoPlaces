@@ -65,10 +65,6 @@ public class MyReviewsActivity extends AppCompatActivity implements ReviewsAdapt
         loadReviews();
     }
 
-    public void listReviews() {
-        reviews = reviewsDAO.listReviews();
-    }
-
     public void loadReviews() {
         reviews.clear();
         DatabaseReference reviewsReference = FirebaseHelper.getDatabaseReference()

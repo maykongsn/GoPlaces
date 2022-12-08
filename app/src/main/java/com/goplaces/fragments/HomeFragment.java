@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment implements ReviewsAdapter.OnClickList
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         reviewsDAO = ReviewsDAO.getInstance(getContext());
-        reviews = reviewsDAO.listReviews();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ReviewsAdapter(reviews, this);

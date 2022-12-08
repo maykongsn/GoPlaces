@@ -40,7 +40,6 @@ public class FavoritesFragment extends Fragment implements ReviewsAdapter.OnClic
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
 
         reviewsDAO = ReviewsDAO.getInstance(getContext());
-        reviews = reviewsDAO.listReviews();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ReviewsAdapter(reviews, this);
@@ -93,6 +92,8 @@ public class FavoritesFragment extends Fragment implements ReviewsAdapter.OnClic
                             }
                         });
                     }
+                } else {
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -101,10 +102,6 @@ public class FavoritesFragment extends Fragment implements ReviewsAdapter.OnClic
 
             }
         });
-    }
-
-    public void loadReviews() {
-
     }
 
     @Override

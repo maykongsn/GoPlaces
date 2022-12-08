@@ -105,6 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
     <android.widget.Button
+        android:visibility="invisible"
         android:id="@+id/buttonAddComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -122,6 +123,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="invisible"
         android:id="@+id/recyclerViewComments"
         android:layout_width="match_parent"
         android:layout_height="0dp"
